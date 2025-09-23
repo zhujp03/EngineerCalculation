@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理员后台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+
+
+        /* 新增退出按钮样式 */-->
+        .logout-container {
+            position: fixed;   /* 固定到窗口右上，而不是 .container 里 */
+            top: 20px;
+            right: 20px;
+
+            z-index: 9999;     /* 把层级抬高，永远浮在最上面 */
+        }
+
+        .logout-btn {
+            padding: 8px 15px;
+            background: #b21f1f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logout-btn:hover {
+            background: #8a1818;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(26, 42, 108, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #1a2a6c;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            color: #b21f1f;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .admin-sections {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .section {
+            flex: 1;
+            min-width: 300px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            color: #1a2a6c;
+            border-bottom: 2px solid #b21f1f;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #1a2a6c;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: #1a2a6c;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 42, 108, 0.2);
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #1a2a6c;
+            color: white;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: #0d1a4a;
+        }
+
+        .btn-danger {
+            background: #b21f1f;
+        }
+
+        .btn-danger:hover {
+            background: #8a1818;
+        }
+
+        .btn-success {
+            background: #2e7d32;
+        }
+
+        .btn-success:hover {
+            background: #1b5e20;
+        }
+
+        .user-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .user-username {
+            font-weight: 600;
+            color: #1a2a6c;
+        }
+
+        .user-role {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .success-message {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #b71c1c;
+            border: 1px solid #ef9a9a;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #1a2a6c;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .admin-sections {
+                flex-direction: column;
+            }
+
+            .user-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .user-actions {
+                margin-top: 10px;
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 新增退出登录按钮 -->
+    <div class="logout-container">
+        <button class="logout-btn" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i> 退出登录
+        </button>
+    </div>
+    <header>
+        <h1><i class="fas fa-user-shield"></i> 管理员后台</h1>
+        <p class="subtitle">管理用户账户和系统管理员</p>
+    </header>
+
+    <div class="admin-sections">
+        <!-- 用户管理部分 -->
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-users"></i> 用户管理</h2>
+
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" placeholder="输入用户名">
+            </div>
+
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" placeholder="输入密码">
+            </div>
+
+            <div class="form-group">
+                <label for="role">用户类型</label>
+                <select id="role">
+                    <option value="engineer">工程师</option>
+                    <option value="user">普通用户</option>
+                </select>
+            </div>
+
+            <button id="addUserBtn"><i class="fas fa-user-plus"></i> 添加用户</button>
+
+            <div id="userMessage" class="message"></div>
+
+            <h3 class="section-title"><i class="fas fa-list"></i> 用户列表</h3>
+            <div class="loading" id="userLoading">
+                <div class="spinner"></div>
+                <p>加载用户中...</p>
+            </div>
+            <div class="user-list" id="userList">
+                <!-- 用户列表将在这里动态生成 -->
+            </div>
+        </div>
+
+        <!-- 管理员管理部分 -->
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-user-cog"></i> 管理员管理</h2>
+
+            <div class="form-group">
+                <label for="adminUsername">管理员账号</label>
+                <input type="text" id="adminUsername" placeholder="输入管理员账号">
+            </div>
+
+            <div class="form-group">
+                <label for="adminPassword">密码</label>
+                <input type="password" id="adminPassword" placeholder="输入密码">
+            </div>
+
+            <button id="addAdminBtn"><i class="fas fa-plus-circle"></i> 添加管理员</button>
+
+            <div id="adminMessage" class="message"></div>
+
+            <h3 class="section-title"><i class="fas fa-info-circle"></i> 系统信息</h3>
+            <div class="system-info">
+                <p><strong>当前管理员:</strong> <span id="currentAdmin">未登录</span></p>
+                <p><strong>用户总数:</strong> <span id="userCount">0</span></p>
+                <p><strong>管理员总数:</strong> <span id="adminCount">0</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addUserBtn = document.getElementById('addUserBtn');
+        const addAdminBtn = document.getElementById('addAdminBtn');
+        const userList = document.getElementById('userList');
+        const userLoading = document.getElementById('userLoading');
+        const userMessage = document.getElementById('userMessage');
+        const adminMessage = document.getElementById('adminMessage');
+        const currentAdmin = document.getElementById('currentAdmin');
+        const userCount = document.getElementById('userCount');
+        const adminCount = document.getElementById('adminCount');
+        const logoutBtn = document.getElementById('logoutBtn'); // 获取退出按钮
+
+        // 显示消息函数
+        function showMessage(element, message, isSuccess) {
+            element.textContent = message;
+            element.className = isSuccess ? 'message success-message' : 'message error-message';
+            element.style.display = 'block';
+
+            // 3秒后隐藏消息
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 3000);
+        }
+
+        // 加载用户列表
+        function loadUsers() {
+            userLoading.style.display = 'block';
+            userList.innerHTML = '';
+
+            fetch('/api/admin/users', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    userLoading.style.display = 'none';
+
+                    if (data.success && data.users) {
+                        // 更新用户计数
+                        userCount.textContent = data.users.length;
+
+                        if (data.users.length === 0) {
+                            userList.innerHTML = '<p>没有用户数据</p>';
+                            return;
+                        }
+
+                        data.users.forEach(user => {
+                            const userItem = document.createElement('div');
+                            userItem.className = 'user-item';
+
+                            userItem.innerHTML = `
+                            <div class="user-info">
+                                <div class="user-username">${user.userName}</div>
+                                <div class="user-role">类型: ${user.Category === 'engineer' ? '工程师' : '普通用户'}</div>
+                            </div>
+                            <div class="user-actions">
+                                <button class="btn-danger delete-user" data-username="${user.userName}">
+                                    <i class="fas fa-trash"></i> 删除
+                                </button>
+                            </div>
+                        `;
+
+                            userList.appendChild(userItem);
+                        });
+
+                        // 添加删除事件监听器
+                        document.querySelectorAll('.delete-user').forEach(button => {
+                            button.addEventListener('click', function() {
+                                const username = this.getAttribute('data-username');
+                                deleteUser(username);
+                            });
+                        });
+                    } else {
+                        userList.innerHTML = '<p>加载用户失败</p>';
+                    }
+                })
+                .catch(error => {
+                    userLoading.style.display = 'none';
+                    userList.innerHTML = '<p>加载用户失败: ' + error.message + '</p>';
+                });
+        }
+
+        // 删除用户
+        function deleteUser(username) {
+            if (!confirm(`确定要删除用户 ${username} 吗？`)) return;
+
+            fetch(`/api/admin/users/${encodeURIComponent(username)}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showMessage(userMessage, `用户 ${username} 已删除`, true);
+                        loadUsers(); // 刷新用户列表
+                    } else {
+                        showMessage(userMessage, `删除失败: ${data.message}`, false);
+                    }
+                })
+                .catch(error => {
+                    showMessage(userMessage, `删除失败: ${error.message}`, false);
+                });
+        }
+
+        // 添加用户
+        addUserBtn.addEventListener('click', function() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            if (!username || !password) {
+                showMessage(userMessage, '请填写用户名和密码', false);
+                return;
+            }
+
+            fetch('/api/admin/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password, role })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showMessage(userMessage, '用户添加成功', true);
+                        document.getElementById('username').value = '';
+                        document.getElementById('password').value = '';
+                        loadUsers(); // 刷新用户列表
+                    } else {
+                        showMessage(userMessage, `添加失败: ${data.message}`, false);
+                    }
+                })
+                .catch(error => {
+                    showMessage(userMessage, `添加失败: ${error.message}`, false);
+                });
+        });
+
+        // 添加管理员
+        addAdminBtn.addEventListener('click', function() {
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+
+            if (!username || !password) {
+                showMessage(adminMessage, '请填写管理员账号和密码', false);
+                return;
+            }
+
+            fetch('/api/admin/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showMessage(adminMessage, '管理员添加成功', true);
+                        document.getElementById('adminUsername').value = '';
+                        document.getElementById('adminPassword').value = '';
+                    } else {
+                        showMessage(adminMessage, `添加失败: ${data.message}`, false);
+                    }
+                })
+                .catch(error => {
+                    showMessage(adminMessage, `添加失败: ${error.message}`, false);
+                });
+        });
+
+        // 获取管理员信息
+        function loadAdminInfo() {
+            fetch('/api/admin/login', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.admin) {
+                        currentAdmin.textContent = data.admin.username;
+                    }
+                })
+                .catch(error => {
+                    console.error('获取管理员信息失败:', error);
+                });
+        }
+
+
+        logoutBtn.addEventListener('click', () => {
+            // 可选：清前端 session
+            sessionStorage.clear();
+            // 绝对路径跳转到根目录下的 login.html
+            window.location.assign('/login.html');
+        });
+
+        // 初始化页面
+        loadUsers();
+        loadAdminInfo();
+    });
+</script>
+</body>
+</html>
