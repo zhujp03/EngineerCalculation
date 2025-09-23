@@ -486,13 +486,16 @@
                     setTimeout(() => {
                         if (role === 'engineer') {
                             // 工程师跳到 index.html
-                            window.location.href = 'Gongchengshijisuan.html';
+                            //window.location.href = 'Gongchengshijisuan.html';
+                            location.replace('Gongchengshijisuan.html');
                         } else if (role === 'user') {
                             // 普通用户跳到 index2.html
-                            window.location.href = 'putongyonghujisuan.html';
+                            //window.location.href = 'putongyonghujisuan.html';
+                            location.replace('putongyonghujisuan.html');
                         }else if (role === 'admin') {
                             // 管理员跳到 admin.html
-                            window.location.href = 'guanliyuan.html';
+                            //window.location.href = 'guanliyuan.html';
+                            location.replace('guanliyuan.html');
                         } else {
                             showMessage('未知用户角色', 'error');
                         }
