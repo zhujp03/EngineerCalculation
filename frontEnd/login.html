@@ -1,3 +1,587 @@
+<!--&lt;!&ndash;login.html&ndash;&gt;-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="zh-CN">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>户外广告结构计算器 - 登录</title>-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">-->
+<!--    <style>-->
+<!--        * {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            box-sizing: border-box;-->
+<!--            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;-->
+<!--        }-->
+
+<!--        body {-->
+<!--            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);-->
+<!--            color: #333;-->
+<!--            line-height: 1.6;-->
+<!--            min-height: 100vh;-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            align-items: center;-->
+<!--            padding: 20px;-->
+<!--        }-->
+
+<!--        .container {-->
+<!--            max-width: 1200px;-->
+<!--            margin: 0 auto;-->
+<!--            width: 100%;-->
+<!--        }-->
+
+<!--        .login-container {-->
+<!--            background: rgba(255, 255, 255, 0.95);-->
+<!--            border-radius: 15px;-->
+<!--            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);-->
+<!--            padding: 40px;-->
+<!--            max-width: 500px;-->
+<!--            margin: 0 auto;-->
+<!--            text-align: center;-->
+<!--        }-->
+
+<!--        .app-title {-->
+<!--            color: #1a2a6c;-->
+<!--            margin-bottom: 20px;-->
+<!--            font-size: 2.5rem;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            gap: 15px;-->
+<!--        }-->
+
+<!--        .app-subtitle {-->
+<!--            color: #b21f1f;-->
+<!--            font-size: 1.2rem;-->
+<!--            margin-bottom: 30px;-->
+<!--        }-->
+
+<!--        .auth-tabs {-->
+<!--            display: flex;-->
+<!--            margin-bottom: 20px;-->
+<!--            border-bottom: 2px solid #eee;-->
+<!--        }-->
+
+<!--        .tab-btn {-->
+<!--            flex: 1;-->
+<!--            padding: 15px;-->
+<!--            background: none;-->
+<!--            border: none;-->
+<!--            font-size: 1.1rem;-->
+<!--            font-weight: 600;-->
+<!--            cursor: pointer;-->
+<!--            transition: all 0.3s;-->
+<!--            color: #666;-->
+<!--            position: relative;-->
+<!--        }-->
+
+<!--        .tab-btn.active {-->
+<!--            color: #1a2a6c;-->
+<!--        }-->
+
+<!--        .tab-btn.active::after {-->
+<!--            content: '';-->
+<!--            position: absolute;-->
+<!--            bottom: -2px;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 3px;-->
+<!--            background: #1a2a6c;-->
+<!--        }-->
+
+<!--        .auth-form {-->
+<!--            display: none;-->
+<!--            padding: 20px 0;-->
+<!--        }-->
+
+<!--        .auth-form.active {-->
+<!--            display: block;-->
+<!--        }-->
+
+<!--        .input-group {-->
+<!--            margin-bottom: 20px;-->
+<!--            text-align: left;-->
+<!--        }-->
+
+<!--        label {-->
+<!--            display: block;-->
+<!--            margin-bottom: 8px;-->
+<!--            font-weight: 600;-->
+<!--            color: #1a2a6c;-->
+<!--        }-->
+
+<!--        input, select {-->
+<!--            width: 100%;-->
+<!--            padding: 14px;-->
+<!--            border: 2px solid #ddd;-->
+<!--            border-radius: 8px;-->
+<!--            font-size: 16px;-->
+<!--            transition: border-color 0.3s;-->
+<!--        }-->
+
+<!--        input:focus, select:focus {-->
+<!--            border-color: #1a2a6c;-->
+<!--            outline: none;-->
+<!--            box-shadow: 0 0 0 3px rgba(26, 42, 108, 0.2);-->
+<!--        }-->
+
+<!--        .btn {-->
+<!--            width: 100%;-->
+<!--            padding: 14px;-->
+<!--            border: none;-->
+<!--            border-radius: 8px;-->
+<!--            font-size: 16px;-->
+<!--            font-weight: 600;-->
+<!--            cursor: pointer;-->
+<!--            transition: all 0.3s;-->
+<!--            margin-top: 10px;-->
+<!--        }-->
+
+<!--        .login-btn {-->
+<!--            background: #1a2a6c;-->
+<!--            color: white;-->
+<!--        }-->
+
+<!--        .register-btn {-->
+<!--            background: #28a745;-->
+<!--            color: white;-->
+<!--        }-->
+
+<!--        .admin-btn {-->
+<!--            background: #dc3545;-->
+<!--            color: white;-->
+<!--        }-->
+
+<!--        .btn:hover {-->
+<!--            transform: translateY(-3px);-->
+<!--            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);-->
+<!--        }-->
+
+<!--        .status-message {-->
+<!--            padding: 15px;-->
+<!--            border-radius: 8px;-->
+<!--            margin-top: 20px;-->
+<!--            display: none;-->
+<!--            font-size: 1rem;-->
+<!--        }-->
+
+<!--        .loading {-->
+<!--            text-align: center;-->
+<!--            background: rgba(26, 42, 108, 0.1);-->
+<!--        }-->
+
+<!--        .success {-->
+<!--            background: rgba(46, 125, 50, 0.15);-->
+<!--            color: #2e7d32;-->
+<!--        }-->
+
+<!--        .error {-->
+<!--            background: rgba(183, 28, 28, 0.15);-->
+<!--            color: #b71c1c;-->
+<!--        }-->
+
+<!--        .spinner {-->
+<!--            border: 4px solid rgba(0, 0, 0, 0.1);-->
+<!--            border-left-color: #1a2a6c;-->
+<!--            border-radius: 50%;-->
+<!--            width: 40px;-->
+<!--            height: 40px;-->
+<!--            animation: spin 1s linear infinite;-->
+<!--            margin: 0 auto 15px;-->
+<!--        }-->
+
+<!--        @keyframes spin {-->
+<!--            to { transform: rotate(360deg); }-->
+<!--        }-->
+
+<!--        @media (max-width: 768px) {-->
+<!--            .login-container {-->
+<!--                padding: 30px 20px;-->
+<!--            }-->
+
+<!--            .app-title {-->
+<!--                font-size: 2rem;-->
+<!--            }-->
+
+<!--            .app-subtitle {-->
+<!--                font-size: 1rem;-->
+<!--            }-->
+
+<!--            .tab-btn {-->
+<!--                font-size: 1rem;-->
+<!--                padding: 12px;-->
+<!--            }-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--    <div class="login-container" id="loginPage">-->
+<!--        <h1 class="app-title"><i class="fas fa-calculator"></i> 计算器</h1>-->
+
+<!--        <div class="auth-tabs">-->
+<!--            <button class="tab-btn active" data-tab="userLogin">用户登录</button>-->
+<!--            <button class="tab-btn" data-tab="adminLogin">管理员登录</button>-->
+<!--            <button class="tab-btn" data-tab="userRegister">用户注册</button>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 用户登录表单 &ndash;&gt;-->
+<!--        <div class="auth-form active" id="userLoginForm">-->
+<!--            <div class="input-group">-->
+<!--                <label for="userUsername">用户名</label>-->
+<!--                <input type="text" id="userUsername" placeholder="请输入用户名">-->
+<!--            </div>-->
+
+<!--            <div class="input-group">-->
+<!--                <label for="userPassword">密码</label>-->
+<!--                <input type="password" id="userPassword" placeholder="请输入密码">-->
+<!--            </div>-->
+
+<!--            <button class="btn login-btn" id="userLoginBtn">-->
+<!--                <i class="fas fa-sign-in-alt"></i> 登录-->
+<!--            </button>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 管理员登录表单 &ndash;&gt;-->
+<!--        <div class="auth-form" id="adminLoginForm">-->
+<!--            <div class="input-group">-->
+<!--                <label for="adminUsername">管理员账号</label>-->
+<!--                <input type="text" id="adminUsername" placeholder="请输入管理员账号">-->
+<!--            </div>-->
+
+<!--            <div class="input-group">-->
+<!--                <label for="adminPassword">密码</label>-->
+<!--                <input type="password" id="adminPassword" placeholder="请输入密码">-->
+<!--            </div>-->
+
+<!--            <button class="btn login-btn" id="adminLoginBtn">-->
+<!--                <i class="fas fa-sign-in-alt"></i> 登录-->
+<!--            </button>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 用户注册表单 &ndash;&gt;-->
+<!--        <div class="auth-form" id="userRegisterForm">-->
+<!--            <div class="input-group">-->
+<!--                <label for="regUsername">用户名</label>-->
+<!--                <input type="text" id="regUsername" placeholder="请输入用户名">-->
+<!--            </div>-->
+
+<!--            <div class="input-group">-->
+<!--                <label for="regPassword">密码</label>-->
+<!--                <input type="password" id="regPassword" placeholder="请输入密码">-->
+<!--            </div>-->
+
+<!--            <div class="input-group">-->
+<!--                <label for="userType">用户类型</label>-->
+<!--                <select id="userType">-->
+<!--                    <option value="user">普通用户</option>-->
+<!--&lt;!&ndash;                    <option value="engineer">工程师</option>&ndash;&gt;-->
+<!--                </select>-->
+<!--            </div>-->
+
+<!--            <button class="btn register-btn" id="userRegisterBtn">-->
+<!--                <i class="fas fa-user-plus"></i> 注册-->
+<!--            </button>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 管理员功能区域（登录后显示） &ndash;&gt;-->
+<!--        <div class="auth-form" id="adminFunctions" style="display: none;">-->
+<!--            <h3 style="color: #1a2a6c; margin-bottom: 20px;">管理员功能</h3>-->
+
+<!--            <div class="input-group">-->
+<!--                <label for="newAdminUsername">新管理员账号</label>-->
+<!--                <input type="text" id="newAdminUsername" placeholder="输入新管理员账号">-->
+<!--            </div>-->
+
+<!--            <div class="input-group">-->
+<!--                <label for="newAdminPassword">密码</label>-->
+<!--                <input type="password" id="newAdminPassword" placeholder="输入密码">-->
+<!--            </div>-->
+
+<!--            <button class="btn admin-btn" id="addAdminBtn">-->
+<!--                <i class="fas fa-user-shield"></i> 添加管理员-->
+<!--            </button>-->
+<!--        </div>-->
+
+<!--        <div class="status-message" id="loginMessage">-->
+<!--            <div class="spinner" id="loginSpinner"></div>-->
+<!--            <p id="loginMessageText"></p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    document.addEventListener('DOMContentLoaded', function() {-->
+<!--        // DOM元素-->
+<!--        const tabBtns = document.querySelectorAll('.tab-btn');-->
+<!--        const authForms = document.querySelectorAll('.auth-form');-->
+<!--        const loginMessage = document.getElementById('loginMessage');-->
+<!--        const loginMessageText = document.getElementById('loginMessageText');-->
+<!--        const loginSpinner = document.getElementById('loginSpinner');-->
+
+<!--        // 标签切换功能-->
+<!--        tabBtns.forEach(btn => {-->
+<!--            btn.addEventListener('click', function() {-->
+<!--                const tabId = this.getAttribute('data-tab');-->
+
+<!--                // 更新活动标签-->
+<!--                tabBtns.forEach(b => b.classList.remove('active'));-->
+<!--                this.classList.add('active');-->
+
+<!--                // 显示对应表单-->
+<!--                authForms.forEach(form => form.classList.remove('active'));-->
+<!--                document.getElementById(tabId + 'Form').classList.add('active');-->
+
+<!--                // 隐藏消息-->
+<!--                loginMessage.style.display = 'none';-->
+<!--            });-->
+<!--        });-->
+
+<!--        // 用户登录-->
+<!--        document.getElementById('userLoginBtn').addEventListener('click', function() {-->
+<!--            const username = document.getElementById('userUsername').value;-->
+<!--            const password = document.getElementById('userPassword').value;-->
+
+<!--            if (!username || !password) {-->
+<!--                showMessage('请输入用户名和密码', 'error');-->
+<!--                return;-->
+<!--            }-->
+
+<!--            loginUser(username, password, 'user');-->
+<!--        });-->
+
+<!--        // 管理员登录-->
+<!--        document.getElementById('adminLoginBtn').addEventListener('click', function() {-->
+<!--            const username = document.getElementById('adminUsername').value;-->
+<!--            const password = document.getElementById('adminPassword').value;-->
+
+<!--            if (!username || !password) {-->
+<!--                showMessage('请输入管理员账号和密码', 'error');-->
+<!--                return;-->
+<!--            }-->
+
+<!--            loginUser(username, password, 'admin');-->
+<!--        });-->
+
+<!--        // 用户注册-->
+<!--        document.getElementById('userRegisterBtn').addEventListener('click', function() {-->
+<!--            const username = document.getElementById('regUsername').value;-->
+<!--            const password = document.getElementById('regPassword').value;-->
+<!--            const userType = document.getElementById('userType').value;-->
+
+<!--            if (!username || !password) {-->
+<!--                showMessage('请输入用户名和密码', 'error');-->
+<!--                return;-->
+<!--            }-->
+
+<!--            registerUser(username, password, userType);-->
+<!--        });-->
+
+<!--        // 添加管理员-->
+<!--        document.getElementById('addAdminBtn').addEventListener('click', function() {-->
+<!--            const username = document.getElementById('newAdminUsername').value;-->
+<!--            const password = document.getElementById('newAdminPassword').value;-->
+
+<!--            if (!username || !password) {-->
+<!--                showMessage('请输入管理员账号和密码', 'error');-->
+<!--                return;-->
+<!--            }-->
+
+<!--            addAdminUser(username, password);-->
+<!--        });-->
+
+<!--        // 显示消息函数-->
+<!--        function showMessage(message, type) {-->
+<!--            loginMessageText.textContent = message;-->
+<!--            loginMessage.className = 'status-message ' + type;-->
+<!--            loginMessage.style.display = 'block';-->
+
+<!--            if (type === 'loading') {-->
+<!--                loginSpinner.style.display = 'block';-->
+<!--            } else {-->
+<!--                loginSpinner.style.display = 'none';-->
+<!--            }-->
+<!--        }-->
+
+<!--        // // 用户登录函数-->
+<!--        // function loginUser(username, password, userType) {-->
+<!--        //     showMessage('登录中...', 'loading');-->
+<!--        //-->
+<!--        //     fetch(`/api/${userType}/login`, {-->
+<!--        //         method: 'POST',-->
+<!--        //         headers: {-->
+<!--        //             'Content-Type': 'application/json'-->
+<!--        //         },-->
+<!--        //         body: JSON.stringify({ username, password })-->
+<!--        //     })-->
+<!--        //         .then(response => response.json())-->
+<!--        //         .then(data => {-->
+<!--        //             if (data.success) {-->
+<!--        //                 // 保存用户信息-->
+<!--        //                 sessionStorage.setItem('user', JSON.stringify({-->
+<!--        //                     username,-->
+<!--        //                     type: userType-->
+<!--        //                 }));-->
+<!--        //-->
+<!--        //                 // 如果是管理员，显示管理员功能-->
+<!--        //                 if (userType === 'admin') {-->
+<!--        //                     document.getElementById('adminFunctions').style.display = 'block';-->
+<!--        //                     showMessage('管理员登录成功！', 'success');-->
+<!--        //                 } else {-->
+<!--        //                     // 跳转到计算器页面-->
+<!--        //                     showMessage('登录成功！正在跳转...', 'success');-->
+<!--        //                     setTimeout(() => {-->
+<!--        //                         window.location.href = 'index.html';-->
+<!--        //                     }, 1500);-->
+<!--        //                 }-->
+<!--        //             } else {-->
+<!--        //                 showMessage(data.message || '登录失败', 'error');-->
+<!--        //             }-->
+<!--        //         })-->
+<!--        //         .catch(error => {-->
+<!--        //             showMessage('登录请求失败: ' + error.message, 'error');-->
+<!--        //         });-->
+<!--        // }-->
+
+<!--        // 用户登录函数-->
+<!--        function loginUser(username, password, userType) {-->
+<!--            showMessage('登录中...', 'loading');-->
+
+<!--            fetch(`/api/${userType}/login`, {-->
+<!--                method: 'POST',-->
+<!--                headers: {-->
+<!--                    'Content-Type': 'application/json'-->
+<!--                },-->
+<!--                body: JSON.stringify({ username, password })-->
+<!--            })-->
+<!--                .then(r => r.json())-->
+<!--                .then(data => {-->
+<!--                    if (!data.success) {-->
+<!--                        showMessage(data.message || '登录失败', 'error');-->
+<!--                        return;-->
+<!--                    }-->
+<!--                    // 保存用户信息-->
+<!--                    // const role = data.user.role;-->
+<!--                    // sessionStorage.setItem('user', JSON.stringify({-->
+<!--                    //     username,-->
+<!--                    //     //type: userType-->
+<!--                    //     role-->
+<!--                    // }));-->
+<!--                    // 如果是 admin 接口，就用 data.admin-->
+<!--                    const role = (userType === 'admin')-->
+<!--                        ? 'admin'-->
+<!--                        : data.user.role;-->
+
+<!--                    // 存下统一的 user 对象-->
+<!--                    sessionStorage.setItem('user', JSON.stringify({-->
+<!--                        username: data.user?.username || data.admin.username,-->
+<!--                        role-->
+<!--                    }));-->
+
+
+<!--                    showMessage('登录成功！正在跳转...', 'success');-->
+
+<!--                    // 登陆成功后根据 userType 跳转不同页面-->
+<!--                    setTimeout(() => {-->
+<!--                        if (role === 'engineer') {-->
+<!--                            // 工程师跳到 index.html-->
+<!--                            window.location.href = 'Gongchengshijisuan.html';-->
+<!--                        } else if (role === 'user') {-->
+<!--                            // 普通用户跳到 index2.html-->
+<!--                            window.location.href = 'putongyonghujisuan.html';-->
+<!--                        }else if (role === 'admin') {-->
+<!--                            // 管理员跳到 admin.html-->
+<!--                            window.location.href = 'guanliyuan.html';-->
+<!--                        } else {-->
+<!--                            showMessage('未知用户角色', 'error');-->
+<!--                        }-->
+<!--                    }, 1000);-->
+
+<!--                })-->
+<!--                .catch(err => {-->
+<!--                    showMessage('登录请求失败: ' + err.message, 'error');-->
+<!--                });-->
+<!--        }-->
+
+<!--        // 用户注册函数-->
+<!--        function registerUser(username, password, userType) {-->
+<!--            showMessage('注册中...', 'loading');-->
+
+<!--            fetch('/api/user/register', {-->
+<!--                method: 'POST',-->
+<!--                headers: {-->
+<!--                    'Content-Type': 'application/json'-->
+<!--                },-->
+<!--                body: JSON.stringify({-->
+<!--                    username,-->
+<!--                    password,-->
+<!--                    role: userType-->
+<!--                })-->
+<!--            })-->
+<!--                .then(response => response.json())-->
+<!--                .then(data => {-->
+<!--                    if (data.success) {-->
+<!--                        showMessage('注册成功！请登录', 'success');-->
+<!--                        // 切换到登录标签-->
+<!--                        tabBtns.forEach(b => b.classList.remove('active'));-->
+<!--                        document.querySelector('[data-tab="userLogin"]').classList.add('active');-->
+<!--                        authForms.forEach(form => form.classList.remove('active'));-->
+<!--                        document.getElementById('userLoginForm').classList.add('active');-->
+<!--                    } else {-->
+<!--                        showMessage(data.message || '注册失败', 'error');-->
+<!--                    }-->
+<!--                })-->
+<!--                .catch(error => {-->
+<!--                    showMessage('注册请求失败: ' + error.message, 'error');-->
+<!--                });-->
+<!--        }-->
+
+<!--        // 添加管理员函数-->
+<!--        function addAdminUser(username, password) {-->
+<!--            showMessage('添加管理员中...', 'loading');-->
+
+<!--            fetch('/api/admin/add', {-->
+<!--                method: 'POST',-->
+<!--                headers: {-->
+<!--                    'Content-Type': 'application/json'-->
+<!--                },-->
+<!--                body: JSON.stringify({ username, password })-->
+<!--            })-->
+<!--                .then(response => response.json())-->
+<!--                .then(data => {-->
+<!--                    if (data.success) {-->
+<!--                        showMessage('管理员添加成功！', 'success');-->
+<!--                        // 清空表单-->
+<!--                        document.getElementById('newAdminUsername').value = '';-->
+<!--                        document.getElementById('newAdminPassword').value = '';-->
+<!--                    } else {-->
+<!--                        showMessage(data.message || '添加管理员失败', 'error');-->
+<!--                    }-->
+<!--                })-->
+<!--                .catch(error => {-->
+<!--                    showMessage('添加管理员请求失败: ' + error.message, 'error');-->
+<!--                });-->
+<!--        }-->
+
+<!--        // 检查是否已登录（管理员）-->
+<!--        const savedUser = sessionStorage.getItem('user');-->
+<!--        if (savedUser) {-->
+<!--            const user = JSON.parse(savedUser);-->
+<!--            if (user.type === 'admin') {-->
+<!--                document.getElementById('adminFunctions').style.display = 'block';-->
+<!--                // 切换到管理员功能标签-->
+<!--                tabBtns.forEach(b => b.classList.remove('active'));-->
+<!--                document.querySelector('[data-tab="adminLogin"]').classList.add('active');-->
+<!--                authForms.forEach(form => form.classList.remove('active'));-->
+<!--                document.getElementById('adminFunctions').classList.add('active');-->
+<!--            }-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
 <!--login.html-->
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -276,7 +860,7 @@
                 <label for="userType">用户类型</label>
                 <select id="userType">
                     <option value="user">普通用户</option>
-<!--                    <option value="engineer">工程师</option>-->
+                    <!--                    <option value="engineer">工程师</option>-->
                 </select>
             </div>
 
@@ -486,16 +1070,13 @@
                     setTimeout(() => {
                         if (role === 'engineer') {
                             // 工程师跳到 index.html
-                            //window.location.href = 'Gongchengshijisuan.html';
-                            location.replace('Gongchengshijisuan.html');
+                            window.location.href = 'Gongchengshijisuan.html';
                         } else if (role === 'user') {
                             // 普通用户跳到 index2.html
-                            //window.location.href = 'putongyonghujisuan.html';
-                            location.replace('putongyonghujisuan.html');
+                            window.location.href = 'putongyonghujisuan.html';
                         }else if (role === 'admin') {
                             // 管理员跳到 admin.html
-                            //window.location.href = 'guanliyuan.html';
-                            location.replace('guanliyuan.html');
+                            window.location.href = 'guanliyuan.html';
                         } else {
                             showMessage('未知用户角色', 'error');
                         }
