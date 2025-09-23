@@ -852,7 +852,7 @@ app.get('/index', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontEnd', 'Gongchengshijisuan.html'));
 });
 app.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontEnd', 'Guanliyuan.html'));
+    res.sendFile(path.join(__dirname, 'frontEnd', 'guanliyuan.html'));
 });
 // 保存输入数据
 app.post('/api/save-input', (req, res) => {

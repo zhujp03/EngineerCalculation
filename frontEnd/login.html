@@ -1068,15 +1068,21 @@
 
                     // 登陆成功后根据 userType 跳转不同页面
                     setTimeout(() => {
+                        // if (role === 'engineer') {
+                        //     // 工程师跳到 index.html
+                        //     window.location.href = 'Gongchengshijisuan.html';
+                        // } else if (role === 'user') {
+                        //     // 普通用户跳到 index2.html
+                        //     window.location.href = 'putongyonghujisuan.html';
+                        // }else if (role === 'admin') {
+                        //     // 管理员跳到 admin.html
+                        //     window.location.href = 'guanliyuan.html';
                         if (role === 'engineer') {
-                            // 工程师跳到 index.html
-                            window.location.href = 'Gongchengshijisuan.html';
+                            location.replace(`${window.location.origin}/Gongchengshijisuan.html`);
                         } else if (role === 'user') {
-                            // 普通用户跳到 index2.html
-                            window.location.href = 'putongyonghujisuan.html';
-                        }else if (role === 'admin') {
-                            // 管理员跳到 admin.html
-                            window.location.href = 'guanliyuan.html';
+                            location.replace(`${window.location.origin}/putongyonghujisuan.html`);
+                        } else if (role === 'admin') {
+                            location.replace(`${window.location.origin}/guanliyuan.html`);
                         } else {
                             showMessage('未知用户角色', 'error');
                         }
