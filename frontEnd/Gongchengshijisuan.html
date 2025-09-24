@@ -109,6 +109,36 @@
             box-shadow: 0 0 0 2px rgba(26, 42, 108, 0.2);
         }
 
+        /* 新增退出按钮样式 */-->
+        .logout-container {
+            position: fixed;   /* 固定到窗口右上，而不是 .container 里 */
+            top: 20px;
+            right: 20px;
+
+            z-index: 9999;     /* 把层级抬高，永远浮在最上面 */
+        }
+
+        .logout-btn {
+            padding: 8px 15px;
+            background: #b21f1f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logout-btn:hover {
+            background: #8a1818;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
         .btn-container {
             display: flex;
             gap: 15px;
@@ -284,6 +314,13 @@
 </head>
 <body>
 <div class="container">
+    <div class="container">
+        <!-- 新增退出登录按钮 -->
+        <div class="logout-container">
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> 退出登录
+            </button>
+        </div>
     <header>
         <h1><i class="fas fa-calculator"></i> 户外广告结构计算器</h1>
         <p class="subtitle">输入广告结构参数，计算风载荷、雪载荷及结构强度</p>
@@ -492,6 +529,14 @@
         const successMessage = document.getElementById('successMessage');
         const errorMessage = document.getElementById('errorMessage');
         const errorText = document.getElementById('errorText');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        logoutBtn.addEventListener('click', () => {
+            // 可选：清前端 session
+            sessionStorage.clear();
+            // 绝对路径跳转到根目录下的 login.html
+            window.location.assign('/login.html');
+        });
 
 
         // 重置表单
@@ -669,6 +714,16 @@
 
             return fieldNames[key] || key;
         }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+        try {
+            await fetch('/api/logout', { method: 'POST' });
+        } catch (e) {
+            // 即使后端没返回，也要继续清理
+        }
+        sessionStorage.clear();   // 清掉前端存的用户信息
+        location.replace('/login.html'); // 回到登录页，replace避免后退再回来
     });
 </script>
 </body>

@@ -547,6 +547,15 @@
         loadUsers();
         loadAdminInfo();
     });
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+        try {
+            await fetch('/api/logout', { method: 'POST' });
+        } catch (e) {
+            // 即使后端没返回，也要继续清理
+        }
+        sessionStorage.clear();   // 清掉前端存的用户信息
+        location.replace('/login.html'); // 回到登录页，replace避免后退再回来
+    });
 </script>
 </body>
 </html>

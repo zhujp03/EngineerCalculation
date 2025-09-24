@@ -1012,6 +1012,12 @@ app.put('/api/admin/users/:username', checkAdmin, (req, res) => {
     });
 });
 
+app.post('/api/logout', (req, res) => {
+    req.session.destroy(() => {
+        res.json({ success: true });
+    });
+});
+
 // 数据库连接
 const db = new sqlite3.Database('./dataBase/windVibration.db', sqlite3.OPEN_READONLY);
 const db2012 = new sqlite3.Database('./dataBase/GB2012.db', sqlite3.OPEN_READONLY);
