@@ -517,8 +517,25 @@
         });
 
         // 获取管理员信息
+        // function loadAdminInfo() {
+        //     fetch('/api/admin/login', {
+        //         method: 'GET',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         }
+        //     })
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             if (data.success && data.admin) {
+        //                 currentAdmin.textContent = data.admin.username;
+        //             }
+        //         })
+        //         .catch(error => {
+        //             console.error('获取管理员信息失败:', error);
+        //         });
+        // }
         function loadAdminInfo() {
-            fetch('/api/admin/login', {
+            fetch('/api/admin/info', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -526,14 +543,25 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.success && data.admin) {
-                        currentAdmin.textContent = data.admin.username;
+                    if (data.success) {
+                        if (data.admin) {
+                            currentAdmin.textContent = data.admin.username; // 更新当前管理员
+                        }
+                        if (data.adminCount !== undefined) {
+                            adminCount.textContent = data.adminCount; // 更新管理员总数
+                        }
+                    } else {
+                        currentAdmin.textContent = '未登录';
+                        adminCount.textContent = '0';
                     }
                 })
                 .catch(error => {
                     console.error('获取管理员信息失败:', error);
+                    currentAdmin.textContent = '未登录';
+                    adminCount.textContent = '0';
                 });
         }
+
 
 
         logoutBtn.addEventListener('click', () => {

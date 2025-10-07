@@ -1331,6 +1331,32 @@ app.post('/api/calculate', async (req, res) => {
     }
 });
 
+app.get('/api/admin/info', (req, res) => {
+    if (!req.session.admin) {
+        return res.json({
+            success: false,
+            message: '管理员未登录'
+        });
+    }
+
+    adminDb.all("SELECT COUNT(*) AS count FROM Admin", (err, rows) => {
+        if (err) {
+            console.error('获取管理员总数失败:', err);
+            return res.status(500).json({
+                success: false,
+                message: '数据库错误'
+            });
+        }
+
+        res.json({
+            success: true,
+            admin: req.session.admin,
+            adminCount: rows[0].count
+        });
+    });
+});
+
+
 // 启动服务器
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
