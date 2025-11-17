@@ -301,6 +301,19 @@
             background: #b21f1f;
         }
 
+        .material-section {
+            background: transparent;
+
+        }
+
+        .material-card {
+            color: black;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
         @media (max-width: 768px) {
             .content {
                 flex-direction: column;
@@ -377,7 +390,7 @@
 
             <div class="input-group">
                 <label for="BoxNumHanging">固定点间距</label>
-                <input type="number" id="BoxNumHanging" min="1" max="100" placeholder="例如：4">
+                <input type="number" id="BoxNumHanging" min="0" max="100" placeholder="例如：4">
             </div>
 
             <div class="input-group">
@@ -505,12 +518,14 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <!-- 在页面下方预先留好两个容器 -->
         <div class="material-section">
-            <h2 class="section-title"><i class="fas fa-clipboard-check"></i> 材料推荐</h2>
+
 
             <div class="material-card">
+                <h2 class="section-title"><i class="fas fa-clipboard-check"></i> 材料推荐</h2>
                 <h3 class="material-title"><i class="fas fa-star"></i> 推荐材料</h3>
                 <!-- 这里渲染 overallSuggestions -->
                 <div id="materialRecommendation">
@@ -519,7 +534,8 @@
             </div>
             </div>
         </div>
-    </div>9
+    </div>
+    </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -569,7 +585,7 @@
                 //lightBoxWidth: parseFloat(document.getElementById('lightBoxWidth').value),
                 lightBoxHeight: parseFloat(document.getElementById('lightBoxHeight').value),
                 lightBoxUnitWeight: parseFloat(document.getElementById('lightBoxUnitWeight').value),
-                BoxNumHanging: parseInt(document.getElementById('BoxNumHanging').value),
+                BoxNumHanging: parseFloat(document.getElementById('BoxNumHanging').value),
                 charAcceptWindArea: parseFloat(document.getElementById('charAcceptWindArea').value),
                 baseWindPressure: parseFloat(document.getElementById('baseWindPressure').value),
                 snowPressure: parseFloat(document.getElementById('snowPressure').value),
