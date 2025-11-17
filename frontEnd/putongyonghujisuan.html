@@ -301,6 +301,24 @@
             background: #b21f1f;
         }
 
+        .material-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            flex: 1;
+            min-width: 300px;
+
+        }
+
+        .material-card {
+            color: black;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
         @media (max-width: 768px) {
             .content {
                 flex-direction: column;
@@ -377,7 +395,7 @@
 
             <div class="input-group">
                 <label for="BoxNumHanging">固定点间距</label>
-                <input type="number" id="BoxNumHanging" min="1" max="100" placeholder="例如：4">
+                <input type="number" id="BoxNumHanging" min="0" max="100" placeholder="例如：4">
             </div>
 
             <div class="input-group">
@@ -428,84 +446,6 @@
                 <i class="fas fa-exclamation-circle"></i> <span id="errorText">发生错误，请检查输入</span>
             </div>
         </div>
-
-<!--        <div class="result-section">-->
-<!--            <h2 class="section-title"><i class="fas fa-chart-bar"></i> 计算结果</h2>-->
-
-<!--            <div class="result-grid">-->
-<!--                <div class="result-card">-->
-<!--                    <h3><i class="fas fa-font"></i> 立体字日常风压</h3>-->
-<!--                    <div class="result-item">-->
-<!--                        <span>水平拉伸强度 (N):</span>-->
-<!--                        <span class="result-value" id="N_char_horizontalPull">-</span>-->
-<!--                    </div>-->
-<!--                    <div class="result-item">-->
-<!--                        <span>水平撕裂强度 (N):</span>-->
-<!--                        <span class="result-value" id="N_char_horizontalBreak">-</span>-->
-<!--                    </div>-->
-<!--                    <div class="result-item">-->
-<!--                        <span>螺丝承受载荷 (N):</span>-->
-<!--                        <span class="result-value" id="N_char_screwForce">-</span>-->
-<!--                    </div>-->
-<!--                    <div class="result-item">-->
-<!--                        <span>垂直拉伸强度 (N):</span>-->
-<!--                        <span class="result-value" id="N_char_verticalPull">-</span>-->
-<!--                    </div>-->
-<!--                    <div class="result-item">-->
-<!--                        <span>垂直撕裂强度 (N):</span>-->
-<!--                        <span class="result-value" id="N_char_verticalBreak">-</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="result-card">-->
-<!--                    <h3><i class="fas fa-lightbulb"></i> 灯箱日常风压</h3>-->
-<!--                    <div class="result-item">-->
-<!--                        <span>水平拉伸强度 (N):</span>-->
-<!--                        <span class="result-value" id="N_horizontalPull">-</span>-->
-<!--                    </div>-->
-<!--                    <div class="result-item">-->
-<!--                        <span>垂直拉伸强度 (N):</span>-->
-<!--                        <span class="result-value" id="N_verticalPull">-</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="result-card">-->
-<!--                    <h3><i class="fas fa-wind"></i> 立体字最大风压</h3>-->
-<!--                    <div class="result-item">-->
-<!--                        <span>水平拉伸强度 (N):</span>-->
-<!--                        <span class="result-value" id="M_char_horizontalPull">-</span>-->
-<!--                    </div>-->
-<!--                    <div class="result-item">-->
-<!--                        <span>水平撕裂强度 (N):</span>-->
-<!--                        <span class="result-value" id="M_char_horizontalBreak">-</span>-->
-<!--                    </div>-->
-<!--                    <div class="result-item">-->
-<!--                        <span>螺丝承受载荷 (N):</span>-->
-<!--                        <span class="result-value" id="M_char_screwForce">-</span>-->
-<!--                    </div>-->
-<!--                    <div class="result-item">-->
-<!--                        <span>垂直拉伸强度 (N):</span>-->
-<!--                        <span class="result-value" id="M_char_verticalPull">-</span>-->
-<!--                    </div>-->
-<!--                    <div class="result-item">-->
-<!--                        <span>垂直撕裂强度 (N):</span>-->
-<!--                        <span class="result-value" id="M_char_verticalBreak">-</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="result-card">-->
-<!--                    <h3><i class="fas fa-tachometer-alt"></i> 灯箱最大风压</h3>-->
-<!--                    <div class="result-item">-->
-<!--                        <span>水平拉伸强度 (N):</span>-->
-<!--                        <span class="result-value" id="M_horizontalPull">-</span>-->
-<!--                    </div>-->
-<!--                    <div class="result-item">-->
-<!--                        <span>垂直拉伸强度 (N):</span>-->
-<!--                        <span class="result-value" id="M_verticalPull">-</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
         <!-- 在页面下方预先留好两个容器 -->
         <div class="material-section">
             <h2 class="section-title"><i class="fas fa-clipboard-check"></i> 材料推荐</h2>
@@ -519,7 +459,8 @@
             </div>
         </div>
     </div>
-</div>9
+</div>
+    </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -568,7 +509,7 @@
                 lightBoxLength: parseFloat(document.getElementById('lightBoxLength').value),
                 lightBoxHeight: parseFloat(document.getElementById('lightBoxHeight').value),
                 lightBoxUnitWeight: parseFloat(document.getElementById('lightBoxUnitWeight').value),
-                BoxNumHanging: parseInt(document.getElementById('BoxNumHanging').value),
+                BoxNumHanging: parseFloat(document.getElementById('BoxNumHanging').value),
                 charAcceptWindArea: parseFloat(document.getElementById('charAcceptWindArea').value),
                 baseWindPressure: parseFloat(document.getElementById('baseWindPressure').value),
                 snowPressure: parseFloat(document.getElementById('snowPressure').value),
